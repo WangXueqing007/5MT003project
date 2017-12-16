@@ -17,7 +17,7 @@ for line in f1:
     list_RMSD1.append(line[1])
 #print (list_frame1)
 #print (list_RMSD1)
-std1=np.std(np.asarray(list_RMSD1))
+#std1=np.std(np.asarray(list_RMSD1))
 f1.close()
 
 f2=open("RMSD_m205p_holo_proteinCA_processed.txt")
@@ -59,14 +59,14 @@ f4.close()
 
 
 
-plt.figure(figsize=(18, 12))
-#plt.subplots(figsize=(18, 12))
+#plt.figure(figsize=(18, 12))
+plt.subplots(figsize=(18, 12))
 #fig.subplots_adjust(bottom=0.025, left=0.025, top = 0.975, right=0.975)
 plt.suptitle ('Protein C-alpha RMSD')
 
 plt.subplot(221)
 plt.plot(list_frame1,list_RMSD1)
-plt.fill_between (list_RMSD1+std1, list_RMSD1-std1, facecolor='b', alpha=0.3)
+#plt.fill_between (list_RMSD1+std1, list_RMSD1-std1, facecolor='b', alpha=0.3)
 plt.xlabel('Time(ns)')
 plt.ylabel('RMSD(A)')
 plt.title('M205P RMSD without PFL')

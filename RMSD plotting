@@ -1,1 +1,91 @@
 #Dec 13th: create RMSD plot
+#command line(write a system file for plotting, on Unix):
+# cd ~/.comtig
+# nano ~/.config/matplotlib/matplotlibrc
+# type "TkAgg", save and exit
+
+import numpy as np
+from matplotlib import pyplot as plt
+#import matplotlib.pyplot as plt
+
+f1=open("RMSD_m205p_apo_proteinCA_matrix.dat")
+list_frame1=[]
+list_RMSD1=[]
+for line in f1:
+    line=line.split()
+    list_frame1.append(line[0])
+    list_RMSD1.append(line[1])
+#print (list_frame1)
+#print (list_RMSD1)
+std1=np.std(np.asarray(list_RMSD1))
+f1.close()
+
+f2=open("RMSD_m205p_holo_proteinCA_processed.txt")
+i=0
+list_frame2=[]
+list_RMSD2=[]
+for line in f2:
+    i=i+1
+    if i!=1 and i!=2:
+        line=line.split()
+        #print (line[0])
+        list_frame2.append(float(line[0]))
+        list_RMSD2.append(float(line[1]))
+#print (list_frame2)
+#print (list_RMSD2)
+f2.close()
+
+f3=open("RMSD_m205g_apo_protCA.dat")
+list_frame3=[]
+list_RMSD3=[]
+for line in f3:
+    line=line.split()
+    list_frame3.append(float(line[0]))
+    list_RMSD3.append(float(line[1]))
+#print (list_frame3)
+#print (list_RMSD3)
+f3.close()
+
+f4=open("RMSD_m205g_holo_protCA.dat")
+list_frame4=[]
+list_RMSD4=[]
+for line in f4:
+    line=line.split()
+    list_frame4.append(float(line[0]))
+    list_RMSD4.append(float(line[1]))
+#print (list_frame4)
+#print (list_RMSD4)
+f4.close()
+
+
+
+plt.figure(figsize=(18, 12))
+#plt.subplots(figsize=(18, 12))
+#fig.subplots_adjust(bottom=0.025, left=0.025, top = 0.975, right=0.975)
+plt.suptitle ('Protein C-alpha RMSD')
+
+plt.subplot(221)
+plt.plot(list_frame1,list_RMSD1)
+plt.fill_between (list_RMSD1+std1, list_RMSD1-std1, facecolor='b', alpha=0.3)
+plt.xlabel('Time(ns)')
+plt.ylabel('RMSD(A)')
+plt.title('M205P RMSD without PFL')
+
+plt.subplot(222)
+plt.plot(list_frame2,list_RMSD2)
+plt.xlabel('Time(ns)')
+plt.ylabel('RMSD(A)')
+plt.title('M205P RMSD with PFL')
+
+plt.subplot(223)
+plt.plot(list_frame3,list_RMSD3)
+plt.xlabel('Time(ns)')
+plt.ylabel('RMSD(A)')
+plt.title('M205G RMSD without PFL')
+
+plt.subplot(224)
+plt.plot(list_frame4,list_RMSD4)
+plt.xlabel('Time(ns)')
+plt.ylabel('RMSD(A)')
+plt.title('M205G RMSD with PFL')
+plt.show()
